@@ -1,23 +1,61 @@
 <html>
-  <head>
-  <script type="text/javascript" src="ice.js"></script>
-  <script type="text/javascript" src="webrtc.js"></script>
-  <script type="text/javascript" src="socketconnectionservice.js"></script>
+   <head>
+      <script type="text/javascript" src="ice.js"></script>
+      <script type="text/javascript" src="webrtc.js"></script>
+      <script type="text/javascript" src="socketconnectionservice.js"></script>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+   </head>
+   <body>
+      <div class="row">
+         <div class="col-sm-6" style="background-color:lavender;">
+            <textarea id="selfName" placeholder="Enter your name"></textarea>
+            <button type="button" id="registerSelf" onclick="registerSelf()" > Register Yourself</button>
+         </div>
+         <div class="col-sm-6" style="background-color:lavenderblush;">
+            <textarea id="friendName" placeholder="Enter Friend name" disabled></textarea>
+            <button type="button" id="friendAvailable" onclick="checkAvailable()" disabled> Check Friend Availablity</button>
+         </div>
+      </div>
 
 
-  </head>
-  <body>
-    <textarea id="selfName" placeholder="Enter your name"></textarea>
-    <button type="button" name="registerSelf" onclick="registerSelf()" > Register Yourself</button>
+      <hr>
+      <div class="row">
+         <div class="col-sm-3" style="background-color:lavender;">
+            <button type="button" id="startChatting" name="startChatting" onclick="startVideoChat()" disabled> Dial Friend</button>
+         </div>
+         <div class="col-sm-3" style="background-color:lavenderblush;">
+            <button type="button" id="startChatting" name="startChatting" onclick="startVideoChat()" disabled> Screen Share</button>
+         </div>
+         <div class="col-sm-3" style="background-color:lavender;">
+            <button type="button" id="startChatting" name="startChatting" onclick="startVideoChat()" disabled> Stop screen</button>
+         </div>
+         <div class="col-sm-3" style="background-color:lavenderblush;">
+            <button type="button" id="startChatting" name="startChatting" onclick="startVideoChat()" disabled> Stop video</button>
+         </div>
+      </div>
 
-    <textarea id="friendName" placeholder="Enter Friend name"></textarea>
-    <button type="button" name="friendAvailable" onclick="checkAvailable()"> Check Friend Availablity</button>
+      <hr>
+      <div class="row">
+        <div class="col-sm-6" style="background-color:lavender;">
+          <p>self video</p>
+           <video id="selfVideo"  width="320" height="240" controls autoplay  ></video>
+        </div>
+        <div class="col-sm-6" style="background-color:lavender;">
+          <p>remote video</p>
+           <video id="remoteVideo"  width="320" height="240" controls autoplay  ></video>
+        </div>
 
-    <button type="button" id="startChatting" name="startChatting" onclick="startVideoChat()" disabled> Start Video Chat</button>
 
-   <video id="selfVideo"  width="320" height="240" autoplay  ></video>
+      </div>
+      <div class="row">
+        <div class="col-sm-3" style="background-color:lavender;">
+        </div>
+        <div class="col-sm-6" style="background-color:lavender;">
+          <textarea id="info" placeholder="" rows="50" cols="100" disabled></textarea>
+        </div>
 
-   <video id="remoteVideo" width="320" height="240" controls autoplay></video>
-   <audio id="remoteAudio" controls autoplay></audio>
-  </body>
+      </div>
+   </body>
 </html>

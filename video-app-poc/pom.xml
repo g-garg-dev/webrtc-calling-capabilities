@@ -98,7 +98,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>com.mettl.videoapp.VideoApp</mainClass>
+                            <mainClass>com.mettl.videoapp.VideoAppPoc</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

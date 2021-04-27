@@ -6,14 +6,21 @@ var to;
 
 var url = window.location.href;
 var arr = url.split("/");
-conf.websocketUrl="wss://"+arr[2]+"/connect";
+//conf.websocketUrl="wss://"+arr[2]+"/connect";
+conf.websocketUrl="wss://localhost/connect";
 function registerSelf(){
-
+  document.getElementById("info").innerHTML += "$-----connecting.....\n";
   var userName= document.getElementById("selfName").value;
 
   webSocket = new WebSocket(conf.websocketUrl+"?userId="+userName);
   webSocket.onopen = function (event) {
-      console.log("ws established");
+      document.getElementById("info").innerHTML += "$-----Websocket established\n";
+      document.getElementById("friendName").disabled=false;
+      document.getElementById("friendAvailable").disabled=false;
+  };
+
+  webSocket.onclose = function (event){
+    document.getElementById("info").innerHTML += "$-----Websocket closed\n";
   };
 
   webSocket.onmessage = function (event) {
@@ -21,9 +28,16 @@ function registerSelf(){
       var receivedMessage = JSON.parse(event.data);
       var msgType = receivedMessage.msgType;
       var message = receivedMessage.message;
+      var friendName = document.getElementById("friendName").value;
+      if(msgType=="AVAILABILITY_RESPONSE"){
+        if(message=="true"){
+            document.getElementById("info").innerHTML += "$-----"+friendName+" available\n";
+            document.getElementById("startChatting").disabled=false;
+        }else{
+            document.getElementById("info").innerHTML += "$-----"+friendName+" Not available\n";
+            document.getElementById("startChatting").disabled=true;
+        }
 
-      if(msgType=="AVAILABILITY_RESPONSE" && message == "true"){
-        document.getElementById("startChatting").disabled=false;
       }else if(msgType=="CREATE_RTP_CONNECTION"){
         handleRTPConnectionInitiateMessage(receivedMessage.from,message);
       }else if(msgType=="SDP_OFFER"){
@@ -35,17 +49,13 @@ function registerSelf(){
       }
 
   }
-
-  webSocket.onclose = function(event) {
-  console.log("WebSocket is closed now.");
-  };
-
 }
 
 function checkAvailable(){
   var selfName= document.getElementById("selfName").value;
   var friendName= document.getElementById("friendName").value;
   var msg = createMessage(selfName,"server","CHECK_AVAILABILITY",friendName);
+  document.getElementById("info").innerHTML += "$-----Checking "+friendName+" available....\n";
   webSocket.send(msg);
 }
 
